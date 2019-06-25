@@ -28,8 +28,10 @@ For a video tutorial on how to use PTF, check out our Vimeo page here: https://v
 
 If you want to install and/or update everything, simply do the following:
 ```
-./ptf
+cd /usr/share/ git clone https://github.com/trustedsec/ptf && cd ptf && ./ptf
+#
 use modules/install_update_all
+#
 yes
 ```
 
