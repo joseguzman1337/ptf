@@ -26,7 +26,7 @@ For a video tutorial on how to use PTF, check out our Vimeo page here: https://v
 
 ### Update EVERYTHING!
 
-If you want to install and/or update everything, simply do the following:
+If you want to install and/or update everything, simply do the following 3 steps:
 ```
 cd /usr/share/ git clone https://github.com/trustedsec/ptf && cd ptf && ./ptf
 #
