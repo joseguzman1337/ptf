@@ -24,7 +24,7 @@ This will put you in a Metasploitesque type shell which has a similar look and f
 
 For a video tutorial on how to use PTF, check out our Vimeo page here: https://vimeo.com/137133837
 
-### Update EVERYTHING!
+### Update/Install EVERYTHING!
 
 If you want to install and/or update everything, simply do the following 3 steps:
 ```
