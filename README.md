@@ -2,7 +2,7 @@
 The PenTesters Framework (PTF)
 ===
 
-#### A TrustedSec Project - Copyright 2018
+#### A TrustedSec Project - Copyright 2022
 
 ### Written by: David Kennedy (@HackingDave)
 
@@ -15,6 +15,17 @@ The PenTesters Framework (PTF) is a Python script designed for Debian/Ubuntu/Arc
 PTF attempts to install all of your penetration testing tools (latest and greatest), compile them, build them, and make it so that you can install/update your distribution on any machine. Everything is organized in a fashion that is cohesive to the Penetration Testing Execution Standard (PTES) and eliminates a lot of things that are hardly used. PTF simplifies installation and packaging and creates an entire pentest framework for you. Since this is a framework, you can configure and add as you see fit. We commonly see internally developed repos that you can use as well as part of this framework. It's all up to you.
 
 The ultimate goal is for community support on this project. We want new tools added to the github repository. Submit your modules. It's super simple to configure and add them and only takes a few minute.
+
+### Installation
+
+PTF requires python-pexpect in order to work appropriately. 
+
+Run the following command below:
+
+```
+pip install -r requirements.txt
+./ptf
+```
 
 ### Instructions:
 
@@ -61,7 +72,12 @@ This will only install the exploitation modules. You can do this for any module 
 
 ### Customize your own installed tools
 
-You can only install the tools you want to by going to the modules/custom_list/list.py section. Modify the list.py file and add the tools you only want to install or update.
+You can install only the tools you want to by going to the modules/custom_list/list.txt section. Modify the list.txt file and add the tools you only want to install or update.
+
+Example list.txt file:
+
+modules/exploitation/metasploit
+modules/post-exploitation/unicorn
 
 Then when in PTF:
 
@@ -72,6 +88,14 @@ yes
 ```
 
 This allows you to carry your module configuration over and only install the tools that you want and keep them updated.
+
+You can also simply specify a module without using the category:
+
+```
+./ptf
+use trevorc2
+yes
+```
 
 ### Modules:
 
@@ -107,7 +131,7 @@ TOOL_DEPEND="modules/exploitation/metasploit"
 
 ### Module Development:
 
-All of the fields are pretty easy, on the repository locations, you can use GIT, SVN or FILE. Fill in the depends, and where you want the install location to be. PTF will take where the python file is located (for example exploitation) and move it to what you specify in the PTF config (located under config). By default it installs all your tools to `/pentest/PTES_PHASE/TOOL_FOLDER`
+All of the fields are pretty easy, on the repository locations, you can use GIT, SVN FILE, OR TAGS. Fill in the depends, and where you want the install location to be. PTF will take where the python file is located (for example exploitation) and move it to what you specify in the PTF config (located under config). By default it installs all your tools to `/pentest/PTES_PHASE/TOOL_FOLDER`
 
 Note in modules, you can specify after commands `{INSTALL_LOCATION}`. This will append where you want the install location to go when using after commands.
 
@@ -117,9 +141,11 @@ You also have the ability for repository locations to specify both a 32 bit and 
 
 Note that ArchLinux packages are also supported, it needs to be specified for both DEBIAN and ARCH in order for it to be properly installed on either platform in the module
 
+When using the TAGS mode, this will allow you to use a github project that utilizes tags to pull the latest version (usually compiled applications) and automatically download. In order to use the TAGS method, take a look at the structure under modules/intelligence-gathering/teamfiltration.py. In this example, there is no need for a repository_location, but you will need to know the project owner, project name/repo, and the filename to download. In the example of TeamFiltration, it is located at: https://github.com/Flangvik/TeamFiltration. The owner would be Flangvik, the project/tool would be TeamFiltration. If you navigate to releases: https://github.com/Flangvik/TeamFiltration/releases/, we can see here that the name of the file we want to download is "TeamFiltration_Linux". These are under the OWNER, REPOHOME, and FILENAME. Specifying these, PTF will automatically detect the latest release of the tool and install them.
+
 ### GITLAB Support
 
-You can create your own modules and also supports gitlab access. Instead of specify git, wget, etc., simply specify gitlab and point to your own internal gitlab tools for modules.
+You can create your own modules and PTF also supports gitlab access. Instead of specifying git, wget, etc., simply specify gitlab and point to your own internal gitlab tools for modules.
 
 ### BYPASS UPDATES:
 
@@ -174,6 +200,25 @@ The `IGNORE_UPDATE_ALL_MODULES=` config option can be found under config/ptf.con
 
 ### INCLUDE_ONLY_THESE_MODULES
 
-The `INCLUDE_ONLY_THESE_MODULES` in the config option under config/ptf.config will only install and include specific modules that is specified here. This is good for baselining your tools that you want and only install them.
+The `INCLUDE_ONLY_THESE_MODULES` in the config option under config/ptf.config will only install and include specific modules that are specified here. This is good for baselining the tools that you want and install only them.
 
 
+### LAUNCH PTF WITH NO BANNER
+
+You can launch PTF with no banner message if you want. Simply specify:
+
+```
+./ptf --no-banner
+
+or 
+
+./ptf -nb
+```
+
+### CHECK FOR INSTALLED PROGRAMS THROUGH PTF
+
+You can check to see what applications you've already installed through PTF by typing the following:
+
+```
+ptf>show installed
+```

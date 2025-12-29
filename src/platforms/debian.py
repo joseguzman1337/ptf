@@ -6,8 +6,6 @@ from src.core import logging
 import subprocess
 
 # this will do updates and installations
-
-
 def base_install_modules(module_name):
 
     counter = 0
@@ -26,10 +24,14 @@ def base_install_modules(module_name):
     # depends
     if counter == 1:
         for module in modules:
-            command = ("apt-get -q --force-yes -y install " + module)
+            # Check if `apt-fast` is available, otherwise use apt-get
+            if subprocess.Popen("which apt-fast >/dev/null", shell=True).wait() == 0:
+                command = ("apt-fast -y install " + module)
+            else:
+                command = ("apt-get -q --allow-downgrades --allow-remove-essential --allow-change-held-packages -y install " + module)
             subprocess.Popen("export DEBIAN_FRONTEND=noninteractive;%s" %
-                             command, shell=True).wait()
+                            command, shell=True).wait()
     else:
-        command = ("apt-get -q --force-yes -y install " + modules)
+        command = ("apt-get -q --allow-downgrades --allow-remove-essential --allow-change-held-packages -y install " + modules)
         subprocess.Popen("export DEBIAN_FRONTEND=noninteractive;%s" %
                          command, shell=True).wait()
