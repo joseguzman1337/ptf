@@ -2,3 +2,6 @@
 config/ptf.config
 
 ptf-output.log
+# macOS system files
+.DS_Store
+._*
