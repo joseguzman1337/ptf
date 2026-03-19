@@ -1,2 +1,2 @@
-pexpect
-logger
+pexpect==4.9.0
+logger==1.4
